@@ -29,20 +29,20 @@ const SpendingInsights = ({ transactions, budgets }) => {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-center">
         <div className="p-3 bg-gray-100 rounded-lg">
           <h3 className="text-lg font-semibold">Total Expenses</h3>
-          <p className="text-xl font-bold text-red-600">${totalSpent.toFixed(2)}</p>
+          <p className="text-xl font-bold text-red-600">₹{totalSpent.toFixed(2)}</p>
         </div>
 
         <div className="p-3 bg-gray-100 rounded-lg">
           <h3 className="text-lg font-semibold">Highest Spending Category</h3>
           <p className="text-xl font-bold text-blue-600">
-            {highestSpending[0]} (${highestSpending[1].toFixed(2)})
+            {highestSpending[0]} (₹{highestSpending[1].toFixed(2)})
           </p>
         </div>
 
         <div className="p-3 bg-gray-100 rounded-lg">
           <h3 className="text-lg font-semibold">Lowest Spending Category</h3>
           <p className="text-xl font-bold text-green-600">
-            {lowestSpending[0]} (${lowestSpending[1].toFixed(2)})
+            {lowestSpending[0]} (₹{lowestSpending[1].toFixed(2)})
           </p>
         </div>
 
