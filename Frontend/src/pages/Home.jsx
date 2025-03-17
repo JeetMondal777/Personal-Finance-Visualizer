@@ -4,15 +4,30 @@ import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { ClipLoader } from "react-spinners";
 import MonthlyExpensesChart from "./components/MonthlyExpensesBarChart";
+import CategoryPieChart from "./components/CategoryPiChart";
+import Dashboard from "./Dashboard";
 
 const Transactions = () => {
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState("");
   const [description, setDescription] = useState("");
+  const [category, setCategory] = useState(""); // New category state
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  const categories = [
+    "Food & Dining",
+    "Transportation",
+    "Shopping",
+    "Health & Fitness",
+    "Entertainment",
+    "Bills & Utilities",
+    "Education",
+    "Savings & Investments",
+    "Other",
+  ]; // Predefined categories
 
   const getOrCreateUserId = () => {
     let userId = localStorage.getItem("userId");
@@ -43,7 +58,7 @@ const Transactions = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!amount || !date || !description) {
+    if (!amount || !date || !description || !category) {
       setError("All fields are required.");
       return;
     }
@@ -53,17 +68,22 @@ const Transactions = () => {
 
     try {
       const userId = getOrCreateUserId();
-      const newTransaction = { amount, date, description };
+      const newTransaction = { amount, date, description, category };
 
-      await axios.post(
+      const reponse = await axios.post(
         `${import.meta.env.VITE_BASE_URL}/transaction/${userId}`,
         newTransaction
       );
 
-      getTransaction();
-      setAmount("");
-      setDate("");
-      setDescription("");
+      if (reponse.status === 201){
+        getTransaction();
+        setAmount("");
+        setDate("");
+        setDescription("");
+        setCategory("");
+      }
+
+      
     } catch (err) {
       setError("Error processing transaction. Try again.");
     } finally {
@@ -78,10 +98,13 @@ const Transactions = () => {
   const handleDelete = async (id) => {
     try {
       const userId = getOrCreateUserId();
-      await axios.delete(
-        `${import.meta.env.VITE_BASE_URL}/transaction/${userId}/${id}`
+      const response = await axios.delete(
+        `${import.meta.env.VITE_BASE_URL}/transaction/${id}`
       );
-      getTransaction();
+      if (response.status === 201){
+        getTransaction();
+
+      }
     } catch (err) {
       console.log("Error deleting transaction:", err);
     }
@@ -115,6 +138,21 @@ const Transactions = () => {
           onChange={(e) => setDescription(e.target.value)}
           className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
+        {/* Category Dropdown */}
+        <select
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="" disabled>
+            Select Category
+          </option>
+          {categories.map((cat, index) => (
+            <option key={index} value={cat}>
+              {cat}
+            </option>
+          ))}
+        </select>
         <button
           type="submit"
           disabled={loading}
@@ -137,6 +175,9 @@ const Transactions = () => {
                 <div>
                   <p className="text-sm font-medium">{transaction.description}</p>
                   <p className="text-xs text-gray-500">{transaction.date}</p>
+                  <p className="text-xs font-semibold text-gray-700">
+                    {transaction.category}
+                  </p>
                 </div>
                 <div className="flex items-center gap-2">
                   <p className="text-sm font-bold text-blue-600">
@@ -163,10 +204,21 @@ const Transactions = () => {
         )}
       </div>
 
+      <div>
+      <Dashboard />
+    </div>
+
       {/* Pass transactions to the chart */}
       <div className="mt-6">
         <MonthlyExpensesChart transactions={transactions} />
       </div>
+
+      {/* Pass transactions to the pie chart */}
+      <div className="mt-6">
+        <CategoryPieChart transactions={transactions} />
+      </div>
+
+
     </div>
   );
 };

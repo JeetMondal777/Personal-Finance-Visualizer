@@ -5,22 +5,32 @@ const router = express.Router();
 
 // Create a new transaction
 router.post("/:id", async (req, res) => {
-    const { id } = req.params;
-      if (!id) {
-        return res.status(400).json({ error: "User ID is required" });
-      }
+  const { id } = req.params;
+  if (!id) {
+    return res.status(400).json({ error: "User ID is required" });
+  }
+
   try {
-    const { amount, date, description } = req.body;
-    if(!amount || !date || !description) {
+    const { amount, date, description, category } = req.body; // Added category
+    if (!amount || !date || !description || !category) {
       return res.status(400).json({ error: "All fields are required" });
     }
-    const newTransaction = new Transaction({ userId:req.params.id, amount, date, description });
+
+    const newTransaction = new Transaction({
+      userId: req.params.id,
+      amount,
+      date,
+      description,
+      category, // Added category to transaction creation
+    });
+
     await newTransaction.save();
     res.status(201).json(newTransaction);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
+
 
 // Get all transactions
 router.get("/:id", async (req, res) => {
@@ -42,23 +52,26 @@ router.get("/:id", async (req, res) => {
 
 // Update a transaction
 router.put("/:id", async (req, res) => {
-    const { id } = req.params;
-      if (!id) {
-        return res.status(400).json({ error: "transaction ID is required" });
-      }
+  const { id } = req.params;
+  if (!id) {
+    return res.status(400).json({ error: "Transaction ID is required" });
+  }
+
   try {
-    
-    const { amount, date, description } = req.body;
+    const { amount, date, description, category } = req.body; // Added category
+
     const updatedTransaction = await Transaction.findByIdAndUpdate(
       req.params.id,
-      { amount, date, description },
+      { amount, date, description, category }, // Updated category field
       { new: true }
     );
+
     res.json(updatedTransaction);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
+
 
 // Delete a transaction
 router.delete("/:id", async (req, res) => {

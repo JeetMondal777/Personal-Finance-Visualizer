@@ -8,38 +8,58 @@ const EditTransactionForm = () => {
   const location = useLocation();
   const transaction = location.state?.transaction || {};
 
+  // Initialize state with transaction values
   const [amount, setAmount] = useState(transaction.amount || "");
   const [date, setDate] = useState(transaction.date || "");
   const [transactionId, setTransactionId] = useState(transaction._id || "");
   const [description, setDescription] = useState(transaction.description || "");
+  const [category, setCategory] = useState(transaction.category || ""); // Ensure this gets updated correctly
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  // Predefined categories
+  const categories = [
+    "Food & Dining",
+    "Transportation",
+    "Shopping",
+    "Health & Fitness",
+    "Entertainment",
+    "Bills & Utilities",
+    "Education",
+    "Savings & Investments",
+    "Other",
+  ];
 
   useEffect(() => {
     if (transaction) {
       setAmount(transaction.amount);
-      setDate(transaction.date);
+      setDate(transaction.date ? transaction.date.split("T")[0] : ""); // Extract YYYY-MM-DD format
       setDescription(transaction.description);
       setTransactionId(transaction._id);
+      setCategory(transaction.category || "");
     }
   }, [transaction]);
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!amount || !date || !description) {
+    if (!amount || !date || !description || !category) {
       setError("All fields are required.");
       return;
     }
-    try{
-      const updatedTransaction = { amount, date, description };
-    const response = await axios.put(`${import.meta.env.VITE_BASE_URL}/transaction/${transactionId}`,updatedTransaction)
-    if(response.status === 200){
-      console.log(response.data);
-      navigate("/");
-    }
+    try {
+      setLoading(true);
+      const updatedTransaction = { amount, date, description, category };
+      const response = await axios.put(
+        `${import.meta.env.VITE_BASE_URL}/transaction/${transactionId}`,
+        updatedTransaction
+      );
 
-    setLoading(true);
-    setError("");
+      if (response.status === 200) {
+        console.log(response.data);
+        navigate("/");
+      }
+      setError("");
     } catch (err) {
       setError("Error updating transaction. Try again.");
     } finally {
@@ -52,7 +72,7 @@ const EditTransactionForm = () => {
       <h2 className="text-2xl font-bold mb-6 text-center text-blue-600">
         Edit Transaction
       </h2>
-      
+
       {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
 
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -87,6 +107,25 @@ const EditTransactionForm = () => {
             onChange={(e) => setDescription(e.target.value)}
             className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
+        </div>
+
+        {/* Category Dropdown */}
+        <div>
+          <label className="block text-gray-700 font-medium">Category</label>
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="" disabled>
+              Select Category
+            </option>
+            {categories.map((cat) => (
+              <option key={cat} value={cat}>
+                {cat}
+              </option>
+            ))}
+          </select>
         </div>
 
         {/* Buttons */}
