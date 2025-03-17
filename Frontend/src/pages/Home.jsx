@@ -14,7 +14,6 @@ const Transactions = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  // Get or create user ID
   const getOrCreateUserId = () => {
     let userId = localStorage.getItem("userId");
     if (!userId) {
@@ -24,7 +23,6 @@ const Transactions = () => {
     return userId;
   };
 
-  // Fetch transactions
   const getTransaction = async () => {
     try {
       const userId = getOrCreateUserId();
@@ -43,7 +41,6 @@ const Transactions = () => {
     getTransaction();
   }, []);
 
-  // Handle form submission (Add Transaction)
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!amount || !date || !description) {
@@ -63,7 +60,7 @@ const Transactions = () => {
         newTransaction
       );
 
-      getTransaction(); // Refresh list dynamically
+      getTransaction();
       setAmount("");
       setDate("");
       setDescription("");
@@ -71,6 +68,22 @@ const Transactions = () => {
       setError("Error processing transaction. Try again.");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleEdit = (transaction) => {
+    navigate("/update", { state: { transaction } }); // Redirect to /update with transaction data
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      const userId = getOrCreateUserId();
+      await axios.delete(
+        `${import.meta.env.VITE_BASE_URL}/transaction/${userId}/${id}`
+      );
+      getTransaction();
+    } catch (err) {
+      console.log("Error deleting transaction:", err);
     }
   };
 
@@ -117,12 +130,31 @@ const Transactions = () => {
         {transactions.length > 0 ? (
           <ul className="space-y-2">
             {transactions.map((transaction) => (
-              <li key={transaction._id} className="p-3 bg-gray-100 rounded-md flex justify-between items-center">
+              <li
+                key={transaction._id}
+                className="p-3 bg-gray-100 rounded-md flex justify-between items-center"
+              >
                 <div>
                   <p className="text-sm font-medium">{transaction.description}</p>
                   <p className="text-xs text-gray-500">{transaction.date}</p>
                 </div>
-                <p className="text-sm font-bold text-blue-600">₹{transaction.amount}</p>
+                <div className="flex items-center gap-2">
+                  <p className="text-sm font-bold text-blue-600">
+                    ₹{transaction.amount}
+                  </p>
+                  <button
+                    onClick={() => handleEdit(transaction)}
+                    className="text-yellow-500 hover:text-yellow-700"
+                  >
+                    <i className="ri-edit-2-line"></i> {/* Edit icon */}
+                  </button>
+                  <button
+                    onClick={() => handleDelete(transaction._id)}
+                    className="text-red-500 hover:text-red-700"
+                  >
+                    <i className="ri-delete-bin-6-line"></i> {/* Delete icon */}
+                  </button>
+                </div>
               </li>
             ))}
           </ul>
