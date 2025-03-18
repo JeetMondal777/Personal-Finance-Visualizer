@@ -46,7 +46,7 @@ npx nodemon
 
 - *PORT*=5000
 - *DB_CONNECT*=your-mongodb-connection-string
-- *CLIENT_URL*=your-localhost-connection
+- *CLIENT_URL*=your-frontend-localhost-connection
 
 ---
 
