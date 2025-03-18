@@ -44,9 +44,9 @@ npx nodemon
 
 ### **📥 Add .env file in Backend**  
 
-- PORT=5000
-- DB_CONNECT=your-mongodb-connection-string
-- CLIENT_URL=your-localhost-connection
+- *PORT*=5000
+- *DB_CONNECT*=your-mongodb-connection-string
+- *CLIENT_URL*=your-localhost-connection
 
 ---
 
