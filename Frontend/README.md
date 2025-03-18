@@ -40,3 +40,11 @@ git clone https://github.com/JeetMondal777/Personal-Finance-Visualizer.git
 cd personal-finance-visualizer-frontend
 npm run dev
 ```
+---
+
+### **📥 Add .env file in Frontend**  
+
+- *VITE_BASE_URL*=your-backend-localhost-connection
+
+
+---
