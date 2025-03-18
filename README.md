@@ -26,7 +26,7 @@ A **MERN stack** web application for tracking expenses, visualizing spending tre
 
 ## **📂 Project Structure**  
 
-- ***/Personal-Finance-Visualizer***
+ ***/Personal-Finance-Visualizer***
 - │── frontend/ # React-based frontend
 - │ │── src/ # Main source code
 - │ │── components/ # UI components

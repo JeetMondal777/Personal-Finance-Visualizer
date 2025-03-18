@@ -14,7 +14,7 @@ This is the **backend** of the **Personal Finance Visualizer**, built using **No
 
 ## **📂 Project Structure**  
 
-- ***/personal-finance-visualizer-backend***
+ ***/personal-finance-visualizer-backend***
 - │── config/ # Database and environment configuration
 - │── controllers/ # Business logic for API endpoints
 - │── models/ # Mongoose schemas for transactions and categories
