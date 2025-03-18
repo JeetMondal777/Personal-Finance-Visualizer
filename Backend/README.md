@@ -50,7 +50,7 @@ npx nodemon
 
 ---
 ### **📌 API Endpoints**
-- Transactions API
+**Transactions API**
 -  GET /:id – Fetch all transactions
 -  POST /:id – Add a new transaction
 -  PUT /:transactionId – Edit a transaction
