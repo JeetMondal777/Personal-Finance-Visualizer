@@ -34,6 +34,6 @@ This is the **backend** of the **Personal Finance Visualizer**, built using **No
 
 ### **📥 Clone the Repository**  
 ```bash
-git clone https://github.com/your-username/personal-finance-visualizer-backend.git
+git clone https://github.com/JeetMondal777/Personal-Finance-Visualizer.git
 cd personal-finance-visualizer-backend
 npx nodemon

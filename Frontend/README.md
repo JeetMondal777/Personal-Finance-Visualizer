@@ -36,6 +36,6 @@ This is the **frontend** of the **Personal Finance Visualizer**, a React-based a
 
 ### **📥 Clone the Repository**  
 ```bash
-git clone https://github.com/your-username/personal-finance-visualizer-frontend.git
+git clone https://github.com/JeetMondal777/Personal-Finance-Visualizer.git
 cd personal-finance-visualizer-frontend
 npm run dev
