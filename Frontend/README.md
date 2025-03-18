@@ -13,7 +13,7 @@ This is the **frontend** of the **Personal Finance Visualizer**, a React-based a
 
 ## **📂 Project Structure**  
 
-- /personal-finance-visualizer-frontend
+- ***/personal-finance-visualizer-frontend***
 - │── public/ # Static assets
 - │── src/ # Main source code
 - │ │── assets/ # Images, icons, and static resources
