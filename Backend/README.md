@@ -51,7 +51,8 @@ npx nodemon
 ---
 ### **📌 API Endpoints**
 - Transactions API
-- 🔹 GET /api/transactions – Fetch all transactions
-- 🔹 POST /api/transactions – Add a new transaction
-- 🔹 DELETE /api/transactions/:id – Delete a transaction
+-  GET /:id – Fetch all transactions
+-  POST /:id – Add a new transaction
+-  PUT /:transactionId – Edit a transaction
+-  DELETE /:transactionId – Delete a transaction
 
