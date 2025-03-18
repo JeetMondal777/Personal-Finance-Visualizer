@@ -49,4 +49,9 @@ npx nodemon
 - *CLIENT_URL*=your-frontend-localhost-connection
 
 ---
+### **📌 API Endpoints**
+- Transactions API
+- 🔹 GET /api/transactions – Fetch all transactions
+- 🔹 POST /api/transactions – Add a new transaction
+- 🔹 DELETE /api/transactions/:id – Delete a transaction
 
