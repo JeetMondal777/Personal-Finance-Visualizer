@@ -18,14 +18,14 @@ This is the **backend** of the **Personal Finance Visualizer**, built using **No
 - │── config/ # Database and environment configuration
 - │── controllers/ # Business logic for API endpoints
 - │── models/ # Mongoose schemas for transactions and categories
-│── routes/ # API routes for transactions, categories
-│── middleware/ # Middleware functions (e.g., error handling)
-│── utils/ # Helper functions (if needed)
-│── .env # Environment variables
-│── .gitignore # Files to ignore in version control
-│── server.js # Main server file
-│── package.json # Dependencies and scripts
-│── README.md # Documentation
+- │── routes/ # API routes for transactions, categories
+- │── middleware/ # Middleware functions (e.g., error handling)
+- │── utils/ # Helper functions (if needed)
+- │── .env # Environment variables
+- │── .gitignore # Files to ignore in version control
+- │── server.js # Main server file
+- │── package.json # Dependencies and scripts
+- │── README.md # Documentation
 
 
 ---
