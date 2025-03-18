@@ -37,3 +37,14 @@ This is the **backend** of the **Personal Finance Visualizer**, built using **No
 git clone https://github.com/JeetMondal777/Personal-Finance-Visualizer.git
 cd personal-finance-visualizer-backend
 npx nodemon
+
+---
+
+### **📥 Add .env file in Backend**  
+
+PORT=5000
+MONGO_URI=your-mongodb-connection-string
+CLIENT_URL=your-localhost-connection
+
+---
+
